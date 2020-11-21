@@ -7,7 +7,7 @@ use Illuminate\Routing\Route;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Order;
- 
+
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 
@@ -15,17 +15,17 @@ class ProductController extends Controller
 {
     function product(Request $request){
         $products= Product::all();
-        return view('product',['product'=>$products]);
+        return view('index',['product'=>$products]);
     }
     function detail($id){
         $products= Product::find($id);
         return view('detail',['product'=>$products]);
     }
     function search(Request $req){
-        
+
         $products=Product::where('name','like','%'.$req->input('search').'%')->get();
         return view('search',['product'=>$products]);
-        
+
     }
 
     function cart(Request $request){
@@ -64,7 +64,7 @@ class ProductController extends Controller
 
         return view('view_cart',['product'=>$products,'total'=>$total]);
 
-        
+
     }
 
     function removecart($id){
@@ -93,7 +93,7 @@ class ProductController extends Controller
             $order->payment_method=$req->payment;
             $order->payment_status="pending";
             $order->save();
-            Cart::where('user_id',$userId)->delete();    
+            Cart::where('user_id',$userId)->delete();
         }
         return redirect('/');
     }
